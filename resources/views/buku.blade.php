@@ -42,6 +42,17 @@
         .header_title {
             color: #F7DCB9;
         }
+
+        .pagination .page-item .page-link {
+            font-size: 14px; /* Ubah ukuran font sesuai kebutuhan */
+            padding: 0.25rem 0.5rem; /* Sesuaikan padding */
+            margin-bottom: 10px;
+        }
+
+        .pagination .page-item .page-link svg {
+            width: 1em; /* Sesuaikan lebar ikon */
+            height: 1em; /* Sesuaikan tinggi ikon */
+        }
     </style>
 </head>
 <body id="body-pd">
@@ -107,7 +118,7 @@
             </thead>
             <tbody>
                 @php
-                    $no = 1;
+                    $no = ($buku->currentPage() - 1) * $buku->perPage() + 1;
                 @endphp
                 @foreach ($buku as $item)
                     <tr class="{{ $loop->odd ? 'table-light' : 'table-secondary' }}">
@@ -144,8 +155,22 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
 
+        <!-- Custom Pagination Links -->
+        <div class="d-flex justify-content-between">
+            @if ($buku->onFirstPage())
+                <span class="btn btn-secondary disabled">&lsaquo; Previous</span>
+            @else
+                <a class="btn btn-primary" href="{{ $buku->previousPageUrl() }}" rel="prev">&lsaquo; Previous</a>
+            @endif
+
+            @if ($buku->hasMorePages())
+                <a class="btn btn-primary" href="{{ $buku->nextPageUrl() }}" rel="next">Next &rsaquo;</a>
+            @else
+                <span class="btn btn-secondary disabled">Next &rsaquo;</span>
+            @endif
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

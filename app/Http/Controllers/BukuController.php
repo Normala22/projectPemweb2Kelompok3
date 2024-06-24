@@ -17,8 +17,6 @@ class BukuController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-
-        // Query data buku dengan filter pencarian jika ada
         $query = DB::table('buku');
 
         if (!empty($search)) {
@@ -28,7 +26,7 @@ class BukuController extends Controller
                   ->orWhere('genre', 'like', '%' . $search . '%');
         }
 
-        $data['buku'] = $query->get();
+        $data['buku'] = $query->paginate(10); // Set the number of items per page
 
         return view('buku', $data);
     }
