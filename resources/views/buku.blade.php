@@ -75,9 +75,21 @@
             </div>
         @endif
 
-        <a href="{{ route('buku.create') }}" class="btn btn-success mb-4" style="margin-top: 35px;">
-            <i class="fas fa-plus"></i> Tambah data
-        </a>        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="{{ route('buku.create') }}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Tambah data
+            </a>
+    
+            <!-- Form pencarian -->
+            <form action="{{ route('buku.index') }}" method="GET" class="topnav d-flex">
+                <div class="search-container flex-grow-1 me-2">
+                    <input type="text" name="search" class="form-control" placeholder="Cari...">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-search"></i> Cari
+                </button>
+            </form>
+        </div>        
 
         <table class="table table-bordered text-center">
             <thead class="table-dark">

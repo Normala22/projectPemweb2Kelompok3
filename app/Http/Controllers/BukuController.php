@@ -14,9 +14,22 @@ class BukuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['buku'] = DB::table('buku')->get();
+        $search = $request->input('search');
+
+        // Query data buku dengan filter pencarian jika ada
+        $query = DB::table('buku');
+
+        if (!empty($search)) {
+            $query->where('kode_buku', 'like', '%' . $search . '%')
+                  ->orWhere('judul', 'like', '%' . $search . '%')
+                  ->orWhere('pengarang', 'like', '%' . $search . '%')
+                  ->orWhere('genre', 'like', '%' . $search . '%');
+        }
+
+        $data['buku'] = $query->get();
+
         return view('buku', $data);
     }
 
