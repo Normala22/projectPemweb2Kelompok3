@@ -15,7 +15,7 @@ Route::get('/about', function () {
     return view('about');
 })->name('about.index');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 Route::get('/home-view', function () {
     return view('home');
 })->name('home.view');
