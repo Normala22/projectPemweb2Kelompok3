@@ -105,13 +105,44 @@
     <main>
         <div class="container mt-5">
             <!-- Search Form -->
-            <form action="{{ route('data.buku2') }}" method="GET" class="mb-4">
+            <form id="searchForm" action="{{ route('data.buku2') }}" method="GET" class="mb-4">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Cari buku berdasarkan judul, pengarang, genre, atau jenis buku..." value="{{ request('search') }}">
+                    <input id="searchInput" type="text" name="search" class="form-control" placeholder="Cari buku berdasarkan judul, pengarang, genre, atau jenis buku..." value="{{ request('search') }}">
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
 
+            <!-- Recommendations Section -->
+            @if(empty(request('search')) && session('last_search'))
+                <div class="mb-4">
+                    <h4>Rekomendasi Untukmu</h4>
+                    <div class="row row-cols-1 row-cols-md-5 g-4">
+                        @foreach ($recommendedBooks as $item)
+                            <div class="col">
+                                <div class="card h-100">
+                                    @if ($item->gambar)
+                                        <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top" alt="{{ $item->judul }}">
+                                    @else
+                                        <img src="{{ asset('storage/default-image.jpg') }}" class="card-img-top" alt="Default Image">
+                                    @endif
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $item->judul }}</h5>
+                                        <p class="card-text">{{ $item->pengarang }}</p>
+                                        <p class="card-description">{{ $item->deskripsi }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            <!-- Search Results Section -->
+            @if(!empty(request('search')))
+                <h4>Hasil Untukmu</h4>
+            @else
+                <h4>Buku Lainnya Untukmu</h4>
+            @endif
             <div class="row row-cols-1 row-cols-md-5 g-4">
                 @foreach ($buku as $item)
                     <div class="col">
@@ -140,7 +171,13 @@
     <script>
         // Initialize AOS
         AOS.init();
-    </script>
 
+        // Handle automatic form submission on search input empty
+        document.getElementById('searchInput').addEventListener('input', function() {
+            if (this.value.trim() === '') {
+                document.getElementById('searchForm').submit();
+            }
+        });
+    </script>
 </body>
 </html>

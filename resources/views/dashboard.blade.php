@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,7 @@
         .content {
             position: relative;
             z-index: 1;
-            background-color: rgba(255, 255, 255, 0.9); 
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 10px;
             margin-top: 50px;
@@ -56,7 +57,7 @@
         }
 
         .container {
-            padding-top: 90px; 
+            padding-top: 90px;
         }
 
         /* Custom Card Styles */
@@ -101,24 +102,24 @@
 
         /* Card Colors */
         .card-buku {
-            background-color: #FFF2D7; 
+            background-color: #FFF2D7;
         }
 
         .card-anggota {
-            background-color: #FFE0B5; 
+            background-color: #FFE0B5;
         }
 
         .card-peminjaman {
-            background-color: #F8C794; 
+            background-color: #F8C794;
         }
 
         .card-pengembalian {
-            background-color: #D8AE7E; 
+            background-color: #D8AE7E;
         }
 
         .btn-primary {
-            background-color: #ED9455; /* Warna latar belakang untuk tombol */
-            color: #fff; /* Warna teks untuk tombol */
+            background-color: #ED9455;
+            color: #fff;
             border: none;
             border-radius: 5px;
             padding: 8px 20px;
@@ -126,12 +127,18 @@
         }
 
         .btn-primary:hover {
-            background-color: #FFBB70; /* Warna latar belakang saat dihover */
-            color: #fff; /* Warna teks saat dihover */
+            background-color: #FFBB70;
+            color: #fff;
         }
 
         /* CSS BUKAN ADMIN */
-        @if (!Auth::user()->is_admin)
+        @media (max-width: 768px) {
+            .header_title {
+                font-size: 1rem;
+                gap: 0.3rem;
+            }
+        }
+
         .not-admin {
             text-align: center;
             margin: 20px 0;
@@ -178,39 +185,66 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
         }
-        @endif
     </style>
 </head>
+
 <body id="body-pd">
     <header class="header d-flex align-items-center" id="header">
-        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <div class="header_toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
         <div class="header_title">
             <i class="fas fa-user"></i> Selamat Datang, {{ Auth::user()->name }}
         </div>
     </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
-            <div> 
-                <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">Perpustakaan</span> </a>
-                <div class="nav_list"> 
-                    <a href="{{ route('dashboard.index') }}" class="nav_link"><i class='bx bx-home nav_icon'></i> <span class="nav_name">Dashboard</span> </a>
+            <div>
+                <a href="#" class="nav_logo">
+                    <i class='bx bx-layer nav_logo-icon'></i>
+                    <span class="nav_logo-name">Perpustakaan</span>
+                </a>
+                <div class="nav_list">
+                    <a href="{{ route('dashboard.index') }}" class="nav_link">
+                        <i class='bx bx-home nav_icon'></i>
+                        <span class="nav_name">Dashboard</span>
+                    </a>
                     @if (!Auth::user()->is_admin)
-                    <a href="{{ route('data.buku2') }}" class="nav_link"><i class='bx bx-book-heart nav_icon'></i> <span class="nav_name">Rekomendasi Buku</span> </a>
+                    <a href="{{ route('data.buku2') }}" class="nav_link">
+                        <i class='bx bx-book-heart nav_icon'></i>
+                        <span class="nav_name">Rekomendasi Buku</span>
+                    </a>
                     @endif
                     @can('admin')
-                        <a href="{{ route('buku.index') }}" class="nav_link"><i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Data Buku</span> </a> 
-                        <a href="{{ route('dashboard.showDataPengguna') }}" class="nav_link"><i class='bx bx-user nav_icon'></i> <span class="nav_name">Data Anggota</span> </a> 
-                        <a href="{{ route('peminjaman.index') }}" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Peminjaman</span> </a> 
-                        <a href="{{ route('pengembalian.index') }}" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Pengembalian</span> </a> 
+                    <a href="{{ route('buku.index') }}" class="nav_link">
+                        <i class='bx bx-grid-alt nav_icon'></i>
+                        <span class="nav_name">Data Buku</span>
+                    </a>
+                    <a href="{{ route('dashboard.showDataPengguna') }}" class="nav_link">
+                        <i class='bx bx-user nav_icon'></i>
+                        <span class="nav_name">Data Anggota</span>
+                    </a>
+                    <a href="{{ route('peminjaman.index') }}" class="nav_link">
+                        <i class='bx bx-message-square-detail nav_icon'></i>
+                        <span class="nav_name">Peminjaman</span>
+                    </a>
+                    <a href="{{ route('pengembalian.index') }}" class="nav_link">
+                        <i class='bx bx-bookmark nav_icon'></i>
+                        <span class="nav_name">Pengembalian</span>
+                    </a>
                     @endcan
                 </div>
 
-                <a href="{{ route('home.view') }}" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Logout</span> </a>
-            </div> 
+                <a href="{{ route('home.index') }}" class="nav_link">
+                    <i class='bx bx-log-out nav_icon'></i>
+                    <span class="nav_name">Logout</span>
+                </a>
+            </div>
         </nav>
     </div>
 
@@ -219,46 +253,46 @@
             @can('admin')
             <h1>Selamat Datang, Admin!</h1>
             <br><br>
-                <div class="col-md-3 mb-4">
-                    <div class="card card-buku">
-                        <div class="card-body">
-                            <i class='bx bx-book-open big-icon'></i>
-                            <h5 class="card-title">Data Buku</h5>
-                            <p class="card-text">Informasi mengenai semua buku yang tersedia di perpustakaan.</p>
-                            <a href="{{ route('buku.index') }}" class="btn btn-primary">Lihat Data Buku</a>
-                        </div>
+            <div class="col-md-3 mb-4">
+                <div class="card card-buku">
+                    <div class="card-body">
+                        <i class='bx bx-book-open big-icon'></i>
+                        <h5 class="card-title">Data Buku</h5>
+                        <p class="card-text">Informasi mengenai semua buku yang tersedia di perpustakaan.</p>
+                        <a href="{{ route('buku.index') }}" class="btn btn-primary">Lihat Data Buku</a>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card card-anggota">
-                        <div class="card-body">
-                            <i class='bx bx-user big-icon'></i>
-                            <h5 class="card-title">Data Anggota</h5>
-                            <p class="card-text">Informasi mengenai anggota perpustakaan.</p>
-                            <a href="{{ route('dashboard.showDataPengguna') }}" class="btn btn-primary">Lihat Data Anggota</a>
-                        </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card card-anggota">
+                    <div class="card-body">
+                        <i class='bx bx-user big-icon'></i>
+                        <h5 class="card-title">Data Anggota</h5>
+                        <p class="card-text">Informasi mengenai anggota perpustakaan.</p>
+                        <a href="{{ route('dashboard.showDataPengguna') }}" class="btn btn-primary">Lihat Data Anggota</a>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card card-peminjaman">
-                        <div class="card-body">
-                            <i class='bx bx-message-square-detail big-icon'></i>
-                            <h5 class="card-title">Data Peminjaman</h5>
-                            <p class="card-text">Informasi mengenai peminjaman buku.</p>
-                            <a href="{{ route('peminjaman.index') }}" class="btn btn-primary">Lihat Data Peminjaman</a>
-                        </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card card-peminjaman">
+                    <div class="card-body">
+                        <i class='bx bx-message-square-detail big-icon'></i>
+                        <h5 class="card-title">Data Peminjaman</h5>
+                        <p class="card-text">Informasi mengenai peminjaman buku.</p>
+                        <a href="{{ route('peminjaman.index') }}" class="btn btn-primary">Lihat Data Peminjaman</a>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card card-pengembalian">
-                        <div class="card-body">
-                            <i class='bx bx-bookmark big-icon'></i>
-                            <h5 class="card-title">Data Pengembalian</h5>
-                            <p class="card-text">Informasi mengenai pengembalian buku.</p>
-                            <a href="{{ route('pengembalian.index') }}" class="btn btn-primary">Lihat Data Pengembalian</a>
-                        </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card card-pengembalian">
+                    <div class="card-body">
+                        <i class='bx bx-bookmark big-icon'></i>
+                        <h5 class="card-title">Data Pengembalian</h5>
+                        <p class="card-text">Informasi mengenai pengembalian buku.</p>
+                        <a href="{{ route('pengembalian.index') }}" class="btn btn-primary">Lihat Data Pengembalian</a>
                     </div>
                 </div>
+            </div>
             @endcan
         </div>
         @if (!Auth::user()->is_admin)
@@ -282,16 +316,16 @@
         @endif
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function(event) {
             const showNavbar = (toggleId, navId, bodyId, headerId) => {
                 const toggle = document.getElementById(toggleId),
-                      nav = document.getElementById(navId),
-                      bodypd = document.getElementById(bodyId),
-                      headerpd = document.getElementById(headerId);
+                    nav = document.getElementById(navId),
+                    bodypd = document.getElementById(bodyId),
+                    headerpd = document.getElementById(headerId);
 
                 if (toggle && nav && bodypd && headerpd) {
                     toggle.addEventListener('click', () => {
@@ -316,4 +350,5 @@
         });
     </script>
 </body>
+
 </html>
